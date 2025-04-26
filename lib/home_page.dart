@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'product_card.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -12,6 +13,7 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   List<dynamic> _products = [];
+  List<dynamic> _cartItems = [];
   bool _isLoading = true;
 
   @override
@@ -40,6 +42,15 @@ class _ProductListPageState extends State<ProductListPage> {
     }
   }
 
+  void _addToCart(dynamic product) {
+    setState(() {
+      _cartItems.add(product);
+    });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Added to cart: ${product['title']}')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,63 +72,13 @@ class _ProductListPageState extends State<ProductListPage> {
                 ),
                 itemBuilder: (context, index) {
                   final product = _products[index];
-                  return ProductCard(product: product);
+                  return ProductCard(
+                    product: product,
+                    onAddToCart: () => _addToCart(product),
+                  );
                 },
               ),
             ),
-    );
-  }
-}
-
-class ProductCard extends StatelessWidget {
-  final dynamic product;
-
-  const ProductCard({super.key, required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shadowColor: Colors.tealAccent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            child: CachedNetworkImage(
-              imageUrl: product['image'],
-              placeholder: (context, url) =>
-                  const Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) =>
-                  const Icon(Icons.error_outline),
-              fit: BoxFit.contain,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4.0),
-            child: Text(
-              product['title'],
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-          Text(
-            '\$${product['price']}',
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.green,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          const SizedBox(height: 6),
-        ],
-      ),
     );
   }
 }
