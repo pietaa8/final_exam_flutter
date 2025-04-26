@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'product_card.dart';
+import 'product_details.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -46,9 +47,6 @@ class _ProductListPageState extends State<ProductListPage> {
     setState(() {
       _cartItems.add(product);
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Added to cart: ${product['title']}')),
-    );
   }
 
   @override
@@ -78,7 +76,7 @@ class _ProductListPageState extends State<ProductListPage> {
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined, color: Colors.white),
             onPressed: () {
-              // You can navigate to a cart page here later
+              // TODO: Navigate to cart screen if needed
             },
           ),
         ],
@@ -104,7 +102,15 @@ class _ProductListPageState extends State<ProductListPage> {
                   final product = _products[index];
                   return ProductCard(
                     product: product,
-                    onAddToCart: () => _addToCart(product),
+                    onAddToCart: (ctx, p) {
+                      _addToCart(p);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailsPage(product: p),
+                        ),
+                      );
+                    },
                   );
                 },
               ),

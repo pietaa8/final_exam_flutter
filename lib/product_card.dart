@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
   final dynamic product;
-  final VoidCallback onAddToCart;
+  final void Function(BuildContext context, dynamic product) onAddToCart;
 
   const ProductCard({
     super.key,
@@ -37,7 +37,7 @@ class ProductCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 14, // ⬅️ increased from 12 to 14
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -45,7 +45,7 @@ class ProductCard extends StatelessWidget {
           Text(
             '\$${product['price']}',
             style: const TextStyle(
-              fontSize: 14, // ⬅️ increased from 12 to 14
+              fontSize: 14,
               color: Color.fromARGB(255, 31, 209, 37),
               fontWeight: FontWeight.w900,
             ),
@@ -54,7 +54,7 @@ class ProductCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: ElevatedButton.icon(
-              onPressed: onAddToCart,
+              onPressed: () => onAddToCart(context, product),
               icon: const Icon(Icons.add_shopping_cart, size: 16),
               label: const Text("Add to Cart", style: TextStyle(fontSize: 12)),
               style: ElevatedButton.styleFrom(
