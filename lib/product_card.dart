@@ -37,7 +37,7 @@ class ProductCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 14, // ⬅️ increased from 12 to 14
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -45,9 +45,9 @@ class ProductCard extends StatelessWidget {
           Text(
             '\$${product['price']}',
             style: const TextStyle(
-              fontSize: 12,
-              color: Colors.green,
-              fontWeight: FontWeight.w500,
+              fontSize: 14, // ⬅️ increased from 12 to 14
+              color: Color.fromARGB(255, 31, 209, 37),
+              fontWeight: FontWeight.w900,
             ),
           ),
           const SizedBox(height: 6),
