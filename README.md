@@ -8,3 +8,4 @@ A new Flutter e-commerce app to display a list of products fetched from the API.
 ![screenshots](assets/screenshots/api_ss4.png)
 ![screenshots](assets/screenshots/api_ss5.png)
 ![screenshots](assets/screenshots/api_ss6.png)
+![screenshots](assets/screenshots/api_ss7.png)
